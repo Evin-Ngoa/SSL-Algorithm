@@ -34,6 +34,7 @@ def brand():
     print("---------------------------------------------------------------------------------------")
     print("\n\n")
 
+# Generate Server Certificates
 def genServerKeys():
     print(f"\n Generating Server Keys ... \n")
 
@@ -120,7 +121,7 @@ def receiveMsg(s, listKeys):
 
                     print(f"\n PlainText = {plainText}")
 
-                    print(f"\n RSA Handshake Done!! ")
+                    print(f"\n RSA Handshake Completed!! ")
                 else:
                     print(f"\n PlainText '_' => {plainText} \n ")
                     secretKey = extractKey(plainText)
@@ -151,6 +152,8 @@ def receiveMsg(s, listKeys):
         # Close the connection with the client 
     conn.close() 
 
+# Extract Secret Key from
+# Text Key
 def extractKey(secretKeyText):
     splitText = secretKeyText.split('-')
     print(f"splitText => {splitText}\n")
@@ -161,6 +164,8 @@ def extractKey(secretKeyText):
 
     return secretKeyValue
 
+# Decrypting the Message from Client Using the 
+# shared key
 def decryptionProcess(cipherTxt, decryptionKey):
     decValList = []
 

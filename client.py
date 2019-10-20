@@ -77,7 +77,7 @@ def iniPortConnection():
     # close the connection 
     sock.close() 
 
-
+# Encrypting Secret Shared Key
 def encryptWithSecretKey(secretKey):
     splitText = secretKey.split('-')
     print(f"splitText => {splitText}\n")
@@ -108,6 +108,8 @@ def encryptionProcessData(word, encryptionKey):
 
     return encValList
 
+# Encrypt secret key with server 
+# public Key
 def encryptSecretKey(serverPublickey, secretKey):
     print(f"\nEncrypting Secret Key...\n")
 
