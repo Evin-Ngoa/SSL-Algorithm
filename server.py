@@ -130,8 +130,6 @@ def receiveMsg(s, listKeys):
 
                     splitText = decodedMsg.split('_')
 
-                    print(f"\n splitText String => {splitText} \n ")
-
                     # Converting all strings in th list to integers.
                     splitText = list(map(int, splitText))
 
