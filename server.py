@@ -30,7 +30,7 @@ def brand():
     print("6. The server receives the ciphertext and decrypts with its private key to get the key.")
     print("7. Handshake Done!")
     print("8. Client sends message to server while encrypted with the secret key.")
-    print("9. Server Decrypts message using the private key shared earlier step 5.")
+    print("9. Server Decrypts message using the secret key shared earlier step 5.")
     print("---------------------------------------------------------------------------------------")
     print("\n\n")
 
