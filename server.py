@@ -33,6 +33,8 @@ def brand():
     print("9. Server Decrypts message using the secret key shared earlier step 5.")
     print("---------------------------------------------------------------------------------------")
     print("\n\n")
+    print("RUN \'client.py\'")
+    print("\n\n")
 
 # Generate Server Certificates
 def genServerKeys():
