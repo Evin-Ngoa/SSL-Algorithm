@@ -85,9 +85,9 @@ def receiveMsg(s, listKeys):
         conn, addr = s.accept()	 
         print('\n Got connection from', addr )
         time.sleep(SLEEPING_TIME)
+
         while True:
-            # data = connection.recv(16)
-            # print('received {!r}'.format(data))
+
             data = conn.recv(1024)
             print('\n Received From Client: {!r}'.format(data))
             time.sleep(SLEEPING_TIME)
@@ -107,7 +107,7 @@ def receiveMsg(s, listKeys):
 
                     # send a thank you message to the client. 
                     conn.sendall(bytMsg) 
-                    # connection.sendall(data)
+                
                 elif(decodedMsg.find('-') != -1):
                     cipherTextList = decodedMsg.split('-')
 
@@ -139,17 +139,17 @@ def receiveMsg(s, listKeys):
                     # Converting all strings in th list to integers.
                     splitText = list(map(int, splitText))
 
-                    # print(f"\n splitText Integer => {splitText} \n ")
-
                     plainText = decryptionProcess(splitText, secretKey)
 
                     print(f"\n plainText => {plainText} \n ")
 
                     print(f"\n SSL-TLS COMMUNICATION DONE!!! \n ")
+
                     break
 
             else:
                 print(' No data from client with Address : ', addr)
+
                 break
 
 
@@ -161,11 +161,9 @@ def receiveMsg(s, listKeys):
 # Text Key
 def extractKey(secretKeyText):
     splitText = secretKeyText.split('-')
-    # print(f"splitText => {splitText}\n")
 
     # convert the lastvalue into integer
     secretKeyValue = int(splitText[-1])
-    # print(f"secretKeyValue => {secretKeyValue}\n")
 
     return secretKeyValue
 

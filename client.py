@@ -49,8 +49,6 @@ def iniPortConnection():
             secretKey = secretKeyGen()
 
             # Encrypt the Secret Key With the 
-    # Encrypt the Secret Key With the 
-            # Encrypt the Secret Key With the 
             # the server Public Key
             cipherText = encryptSecretKey(serverPublickey, secretKey)
 
@@ -67,8 +65,6 @@ def iniPortConnection():
             time.sleep(SLEEPING_TIME*4)
 
             cipherSecretTxt = encryptWithSecretKey(secretKey)
-
-            # print(f"cipherSecretTxt  => {cipherSecretTxt}\n")
 
             # Convert each value in list into string
             cipherSecretTxt = list(map(str, cipherSecretTxt))
@@ -131,7 +127,7 @@ def encryptSecretKey(serverPublickey, secretKey):
 
     eVal = int(serverPublickey[0])
     nVal = int(serverPublickey[1])
-    # print(f"\n eVal = {eVal} | nVal = {nVal} \n")
+
     cipherList = keyGen.encryptRSA(secretKey, eVal, nVal)
 
     print(f"\nCipher Secret Key => {cipherList}\n")
@@ -160,11 +156,6 @@ def secretKeyGen():
 # Handles Receiving Message 
 # From Server
 def receiveMsg(decodedMsg):
-    # receive data from the server 
-    # data = sock.recv(1024)
-
-    #decode Message
-    # decodedMsg = data.decode()
 
     print(f"\n Client Received ---> {decodedMsg}")
 
@@ -179,16 +170,13 @@ def extractKeys(decodedMsg):
     # Remove of the pipe symbol 
     # generalResponseString => Hello FROM SERVER generalKeyString => (5,28757)
     generalResponseString, generalKeyString = decodedMsg.split(' | ')
-    # print(f"generalResponseString => {generalResponseString} generalKeyString => {generalKeyString}")
     
     # Seperate by commas bracketE => (5 bracketN => 28757)
     bracketE ,bracketN = generalKeyString.split(',')
-    # print(f"bracketE => {bracketE} bracketN => {bracketN}")
 
     # Remove Brackets  filteredE => ['', '5'] filteredN => ['28757', '']
     filteredE = bracketE.split('(')
     filteredN = bracketN.split(')')
-    # print(f"filteredE => {filteredE} filteredN => {filteredN}")
 
     # Getting the exact values
     valE = filteredE[1]

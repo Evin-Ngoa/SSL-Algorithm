@@ -1,3 +1,5 @@
 # ignore folder
 Resources/
 __pycache__/
+
+*.txt
