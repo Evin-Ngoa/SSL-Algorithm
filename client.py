@@ -35,44 +35,58 @@ def iniPortConnection():
     time.sleep(SLEEPING_TIME)
     initMsgSender(sock, message)
     
-    # Receiving Server Message
-    serverPublickey = receiveMsg(sock)
+    while True:
+        # Receiving Server Message
+        # receive data from the server 
+        data = sock.recv(1024)
 
-    # Client Generate Secret Key
-    secretKey = secretKeyGen()
+        #decode Message
+        decodedMsg = data.decode()
+        if(decodedMsg.find('ServerHello') != -1):
+            serverPublickey = receiveMsg(decodedMsg)
 
+            # Client Generate Secret Key
+            secretKey = secretKeyGen()
+
+            # Encrypt the Secret Key With the 
     # Encrypt the Secret Key With the 
-    # the server Public Key
-    cipherText = encryptSecretKey(serverPublickey, secretKey)
+            # Encrypt the Secret Key With the 
+            # the server Public Key
+            cipherText = encryptSecretKey(serverPublickey, secretKey)
 
-    # Send the CipherText
-    cipherbyte = bytes(cipherText, 'utf-8')
-    print(f"Sending \'secret Key\' to Server ...\n")
-    
-    time.sleep(SLEEPING_TIME)
-    initMsgSender(sock, cipherbyte)
-    print(f"CipherText Sent => {cipherText}")
+            # Send the CipherText
+            cipherbyte = bytes(cipherText, 'utf-8')
+            print(f"Sending \'secret Key\' to Server ...\n")
+            
+            time.sleep(SLEEPING_TIME)
+            initMsgSender(sock, cipherbyte)
+            print(f"CipherText Sent => {cipherText}")
 
-    # Sleep for more time wait for server to decrypt key
-    # Sleep for 9 sec [3 * 3]
-    time.sleep(SLEEPING_TIME*4)
+            # Sleep for more time wait for server to decrypt key
+            # Sleep for 9 sec [3 * 3]
+            time.sleep(SLEEPING_TIME*4)
 
-    cipherSecretTxt = encryptWithSecretKey(secretKey)
+            cipherSecretTxt = encryptWithSecretKey(secretKey)
 
-    print(f"cipherSecretTxt  => {cipherSecretTxt}\n")
+            # print(f"cipherSecretTxt  => {cipherSecretTxt}\n")
 
-    # Convert each value in list into string
-    cipherSecretTxt = list(map(str, cipherSecretTxt))
+            # Convert each value in list into string
+            cipherSecretTxt = list(map(str, cipherSecretTxt))
 
-    cipherscrttext = "_".join(str(intVal) for intVal in cipherSecretTxt)
+            cipherscrttext = "_".join(str(intVal) for intVal in cipherSecretTxt)
+            print(f"cipherSecretTxt Cipher => {cipherscrttext}\n")
+        else:
+            print(f"Client Received ==> {decodedMsg}")
+            print(f"\n HANDSHAKE COMPLETED !!! \n ")
 
-    # Send the cipherSecretTxt
-    cipherSecretbyte = bytes(cipherscrttext, 'utf-8')
-    print(f"Sending \'{MESSAGE}\' encrypted with secret Key to Server ...\n")
-    
-    time.sleep(SLEEPING_TIME)
-    initMsgSender(sock, cipherSecretbyte)
-    print(f"Message CipherText Sent => {cipherText}")
+            # Send the cipherSecretTxt
+            cipherSecretbyte = bytes(cipherscrttext, 'utf-8')
+            print(f"Sending \'{MESSAGE}\' encrypted with secret Key to Server ...\n")
+            
+            time.sleep(SLEEPING_TIME)
+            initMsgSender(sock, cipherSecretbyte)
+            print(f"Message CipherText Sent => {cipherText}")
+            break
 
     # close the connection 
     sock.close() 
@@ -145,14 +159,14 @@ def secretKeyGen():
 
 # Handles Receiving Message 
 # From Server
-def receiveMsg(sock):
+def receiveMsg(decodedMsg):
     # receive data from the server 
-    data = sock.recv(1024)
+    # data = sock.recv(1024)
 
     #decode Message
-    decodedMsg = data.decode()
+    # decodedMsg = data.decode()
 
-    print(f"\n {decodedMsg}")
+    print(f"\n Client Received ---> {decodedMsg}")
 
     keys = extractKeys(decodedMsg)
 

@@ -28,7 +28,7 @@ def brand():
     print("4. Clients receives the public key and generates secret key")
     print("5. The secret key is encrypted with the server public key and sent to the server.")
     print("6. The server receives the ciphertext and decrypts with its private key to get the key.")
-    print("7. Handshake Done!")
+    print("7. The server return finished message to client. Handshake Completed!!!")
     print("8. Client sends message to server while encrypted with the secret key.")
     print("9. Server Decrypts message using the secret key shared earlier step 5.")
     print("---------------------------------------------------------------------------------------")
@@ -36,7 +36,7 @@ def brand():
 
 # Generate Server Certificates
 def genServerKeys():
-    print(f"\n Generating Server Keys ... \n")
+    print(f"\n Generating Server Certificates ... \n")
 
     time.sleep(SLEEPING_TIME)
 
@@ -72,7 +72,7 @@ def initPortConnection(PORT, HOST, server_address):
 def receiveMsg(s, listKeys):
     # put the socket into listening mode 
     s.listen(5)	 
-    print(" Socket is listening")
+    print(" Socket is listening...")
     brand()
 
     time.sleep(SLEEPING_TIME)
@@ -121,20 +121,25 @@ def receiveMsg(s, listKeys):
 
                     print(f"\n PlainText = {plainText}")
 
-                    print(f"\n RSA Handshake Completed!! ")
+                    print(f"\n Sending \'Final\' Message To Complete Handshake")
+                    finMsg = 'Finished'
+                    bytFinMsg = bytes(finMsg, 'utf-8')
+
+                    # send a thank you message to the client. 
+                    conn.sendall(bytFinMsg) 
                 else:
                     print(f"\n PlainText '_' => {plainText} \n ")
                     secretKey = extractKey(plainText)
                     print(f"\n secretKey Value '_' => {secretKey} \n ")
 
-                    print(f"\n Else Msg => {decodedMsg} \n ")
+                    print(f"\n Cipher => {decodedMsg} \n ")
 
                     splitText = decodedMsg.split('_')
 
                     # Converting all strings in th list to integers.
                     splitText = list(map(int, splitText))
 
-                    print(f"\n splitText Integer => {splitText} \n ")
+                    # print(f"\n splitText Integer => {splitText} \n ")
 
                     plainText = decryptionProcess(splitText, secretKey)
 
@@ -156,11 +161,11 @@ def receiveMsg(s, listKeys):
 # Text Key
 def extractKey(secretKeyText):
     splitText = secretKeyText.split('-')
-    print(f"splitText => {splitText}\n")
+    # print(f"splitText => {splitText}\n")
 
     # convert the lastvalue into integer
     secretKeyValue = int(splitText[-1])
-    print(f"secretKeyValue => {secretKeyValue}\n")
+    # print(f"secretKeyValue => {secretKeyValue}\n")
 
     return secretKeyValue
 

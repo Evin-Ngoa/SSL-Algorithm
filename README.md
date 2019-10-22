@@ -13,7 +13,7 @@ A very basic implementation of SSL Algorithm written in Python
 4. Clients receives the public key and generates secret key 
 5. The secret key is encrypted with the server public key and sent to the server. 
 6. The server receives the ciphertext and decrypts with its private key to get the key. 
-7. Handshake Done! 
+7. The server return finished message to client. Handshake Completed!!!
 8. Client sends message to server while encrypted with the secret key. 
 9. Server Decrypts message using the private key shared earlier step 5.
 DONE
