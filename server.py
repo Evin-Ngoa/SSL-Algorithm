@@ -33,7 +33,7 @@ def brand():
     print("9. Server Decrypts message using the secret key shared earlier step 5.")
     print("---------------------------------------------------------------------------------------")
     print("\n\n")
-    print("RUN \'client.py\' on the second terminal.")
+    print("RUN \'python client.py\' on the second terminal.")
     print("\n\n")
 
 # Generate Server Certificates
@@ -91,7 +91,7 @@ def receiveMsg(s, listKeys):
         while True:
 
             data = conn.recv(1024)
-            print('\n Received From Client: {!r}'.format(data))
+            # print('\n Received From Client: {!r}'.format(data))
             time.sleep(SLEEPING_TIME)
 
             # decode Message
@@ -99,7 +99,7 @@ def receiveMsg(s, listKeys):
             if data:
                 # Checking 1st Time 
                 if(decodedMsg == 'ClientHello'):
-                    print('\n Sending data back to the client...\n')
+                    print('\n Sending \'ServerHello\' to the client...\n')
                     time.sleep(SLEEPING_TIME)
 
                     # Sends back Server Hello
@@ -111,30 +111,34 @@ def receiveMsg(s, listKeys):
                     conn.sendall(bytMsg) 
                 
                 elif(decodedMsg.find('-') != -1):
+                    
+                    print(f"\n Cipher = {decodedMsg}")
                     cipherTextList = decodedMsg.split('-')
 
                     # Converting all strings in th list to integers.
                     cipherTextList = list(map(int, cipherTextList))
                     time.sleep(SLEEPING_TIME)
 
-                    print(f"\n Separated = {cipherTextList}")
+                    # print(f"\n Separated = {cipherTextList}")
 
                     plainText = keyGen.decryptRSA(cipherTextList , int(listKeys[2]), int(listKeys[3]))
 
                     print(f"\n PlainText = {plainText}")
 
-                    print(f"\n Sending \'Final\' Message To Complete Handshake")
+                    print(f"\n Sending \'Finished\' Message To Complete Handshake")
                     finMsg = 'Finished'
                     bytFinMsg = bytes(finMsg, 'utf-8')
 
                     # send a thank you message to the client. 
                     conn.sendall(bytFinMsg) 
                 else:
-                    print(f"\n PlainText '_' => {plainText} \n ")
-                    secretKey = extractKey(plainText)
-                    print(f"\n secretKey Value '_' => {secretKey} \n ")
-
                     print(f"\n Cipher => {decodedMsg} \n ")
+                    time.sleep(SLEEPING_TIME)
+
+                    print(f"\n Secret Key PlainText  => {plainText} \n ")
+                    secretKey = extractKey(plainText)
+                    print(f"\n secretKey Value => {secretKey} \n ")
+                    time.sleep(SLEEPING_TIME)
 
                     splitText = decodedMsg.split('_')
 
@@ -174,7 +178,7 @@ def extractKey(secretKeyText):
 def decryptionProcess(cipherTxt, decryptionKey):
     decValList = []
 
-    print("\nDecryption Key => ", decryptionKey)
+    # print("\nDecryption Key => ", decryptionKey)
 
     for char in cipherTxt:
         # Compute Original Unicode

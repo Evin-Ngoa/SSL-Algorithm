@@ -31,7 +31,7 @@ def iniPortConnection():
 
     # Sending Hello Message
     message = b'ClientHello'
-    print(f"Sending \'ClientHello\' to Server ...")
+    print(f"Sending \'{message}\' to Server ...")
     time.sleep(SLEEPING_TIME)
     initMsgSender(sock, message)
     
@@ -147,7 +147,7 @@ def secretKeyGen():
 
     time.sleep(SLEEPING_TIME)
     secretVal = random.randint(Min,Max)
-    secretK = "this-is-a-secret-key-" + str(secretVal)
+    secretK = "i-am-selling-this-code-for-" + str(secretVal)
 
     print(f"\nSecret Key => {secretK}\n")
 
