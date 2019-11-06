@@ -3,7 +3,7 @@
  > TITLE       : SSL ALGORITHM [RSA AND SHARED KEY MODEL]
  > LANGUAGE    : PYTHON 3
  
- # SSL-TLS ALGORITHM
+ # SSL ALGORITHM
 A very basic implementation of SSL Algorithm written in Python
 ### How It Works
 ---------------------------------------------------------------------------------------- 
